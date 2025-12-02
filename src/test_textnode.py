@@ -11,11 +11,11 @@ class TestTextNode(unittest.TestCase):
 
     def test_type_not_eq(self):
         node = TextNode("This should not be equal", TextType.BOLD)
-        node2 = TextNode("This shoudl not be equal", TextType.PLAIN)
+        node2 = TextNode("This shoudl not be equal", TextType.TEXT)
         self.assertNotEqual(node,node2)
     
     def test_no_url(self):
-        node = TextNode("Url is a blank string", TextType.PLAIN)
+        node = TextNode("Url is a blank string", TextType.TEXT)
         self.assertIsNone(node.url)
     
     def test_has_url(self):
