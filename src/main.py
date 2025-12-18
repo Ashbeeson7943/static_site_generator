@@ -4,14 +4,16 @@ import sys
 from converter import markdown_to_html_node
 
 def main():
-    static_file_path = "./static"
-    public_file_path = "./docs"
-    content_file_path = "./content"
-    template_file_path = "./template.html"
-    site_base_path = "/"
+
+    site_base_path = "./"
 
     for arg in sys.argv[1:]:
         site_base_path = arg
+
+    static_file_path = "static"
+    public_file_path = "docs"
+    content_file_path = "content"
+    template_file_path = "template.html"
 
     print(f"Base site path: {site_base_path}")
 
