@@ -5,9 +5,14 @@ from converter import markdown_to_html_node
 def main():
     static_file_path = "./static"
     public_file_path = "./public"
+    content_file_path = "./content"
+    template_file_path = "./template.html"
+
     clear_public(public_file_path)
     copy_static_to_public(static_file_path, public_file_path)
-    generate_page("./content/index.md", "./template.html", os.path.join(public_file_path, "index.html"))
+    generate_pages_recursive(content_file_path, template_file_path, public_file_path)
+
+
 
 def clear_public(base_path):
     if os.path.exists(base_path):
@@ -51,6 +56,22 @@ def generate_page(from_path, template_path, dest_path):
         os.makedirs(os.path.dirname(dest_path), exist_ok=True)
         with open(dest_path,"w") as f:
             f.write(template)
+
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    files_found = os.listdir(dir_path_content)
+    for file in files_found:
+        file_path = os.path.join(dir_path_content, file)
+        if not os.path.isfile(file_path):
+            os.mkdir(os.path.join(dest_dir_path, file))
+            src_path = os.path.join(dir_path_content, file)
+            dest_path = os.path.join(dest_dir_path, file)
+            generate_pages_recursive(src_path, template_path, dest_path)
+        else:
+            if ".md" in file:
+                file = file.replace(".md", ".html")
+                generate_page(file_path, template_path, os.path.join(dest_dir_path, file))
+    
 
 
 main()
